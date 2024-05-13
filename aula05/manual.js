@@ -103,3 +103,48 @@ OBS:para identificar uma variável usa-se o typeof + nome da variável
     
 </body>
 </html>
+= RECEBE
+== igual
+=== IGUALDADE RESTRITA
+OPERADORES ARTIMÉTICOS(conforme as regras da matemática)
++ - * / % ** ()
+OPERADORES RELACIONAIS(quem aparecer primeiro vai ser feito primeiro)
+>
+<
+>=
+OPERADORES LÓGICOS
+
+PRIMEIRO O NÃO ! DEPOIS E && DEPOIS O OU ||
+
+ORDEM: OPERADORES ARTIMÉTICOS DEPOIS OPERADORES RELACIONAIS DEPOIS OPERADORES LÓGICOS E POR ULTIMO OPERADOR TERNÁRIO
+
+
+EXEMPLOS
+idade >= 15 && idade <=17 idade entre 15 e 17?
+estado =='RJ' || estado =='SP' o estado é RJ ou SP?
+salário > 1500 && sexo != 'M' O sálario é acima de 1500 e não é homem?
+
+OPERADOR TERNÁRIO(PORQUE TEM TRÊS PARTES)
+? 
+:
+
+   teste      ?(SE FOR)   true       :(SE NÃO)   false
+média >=7.0   ?        "APROVADO"    :        "REPROVADO"
+
+
+EXEMPLOS 
+
+> var x = 8
+undefined
+> var res = x % 2 == 0 ? 5 : 9
+undefined
+> x
+8
+> res
+5
+> var idade = 19
+undefined
+> var r = idade >= 18 ? 'MAIOR' : 'MENOR'
+undefined
+> r
+'MAIOR'
