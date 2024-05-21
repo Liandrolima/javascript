@@ -148,3 +148,4 @@ undefined
 undefined
 > r
 'MAIOR'
+DOM - Document Object Model ele é a vertente web do Java Script, para o qual a linguagem foi criada. Uma poderosa ferramenta que esta dentro do navegador, o conjunto de objetos JavaScript para tratamento de componentes visuais
