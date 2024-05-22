@@ -149,3 +149,40 @@ undefined
 > r
 'MAIOR'
 DOM - Document Object Model ele é a vertente web do Java Script, para o qual a linguagem foi criada. Uma poderosa ferramenta que esta dentro do navegador, o conjunto de objetos JavaScript para tratamento de componentes visuais
+Ávore DOM(modelo de objeto para documentos): começa da raiz que é window, tudo dentro do js esta dentro do window(dentro do window temos vários objetos como: location, document, history), dentro de document temos html e dentro de html temos head e body, dentro de head temos meta e title, dentro do body temos h1, p, p, div, dentro de p temos strong isso é um exemplo de árvore DOM que está no exercício ex004.html da aula06.
+
+Existe várias maneiras de se navegar pelos elementos de uma árvore DOM.
+        1 - por Marca
+        2- por ID
+        3- por Nome
+        4- por Classe
+        5- por Seletor
+        
+        /*window.document.write('Jesus')*/
+        /*window.document.write(window.document.charset)*/
+        /*window.document.write(window.navigator.appName)*/
+        /*window.document.write(window.window.document.URL)
+
+        /*1 - por Marca(tag)*/
+        /*var corpo = window.document.body
+        var p1 = window.document.getElementsByTagName('p')[1]
+        window.document.write('Esta escrito assim: ' + p1.innerText)
+        corpo.style.background = 'black'
+        p1.style.color = 'blue'
+        document.write(p1.innerHTML)
+        window.alert(p1.innerHTML)
+        window.alert(p1.innerText)*/
+        /*2- por ID*/
+        var corpo = window.document.body
+        var p1 = window.document.getElementsByTagName('p')[1]
+        /*var d = window.document.getElementById('msg')
+        d.style.background = 'green'
+        d.innerText = 'Estou aguardando...'*/               
+        /*3- por Nome*/
+        var d = window.document.getElementsByName('msg')[0]
+        d.innerText = 'olá!'
+        /*4- por Classe*/
+        window.document.getElementsByClassName('msg')[0]
+        /*5- por Seletor MAIS RECOMENDADO*/
+        var d = window.document.querySelector('div#msg')
+        d.style.background = 'blue'
