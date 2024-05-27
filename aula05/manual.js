@@ -186,3 +186,8 @@ Existe várias maneiras de se navegar pelos elementos de uma árvore DOM.
         /*5- por Seletor MAIS RECOMENDADO*/
         var d = window.document.querySelector('div#msg')
         d.style.background = 'blue'
+        EVENTOS DOM: É TUDO AQUILO QUE PODE ACONTECER COM UM ELEMENTO COM EXEMPLO UMA DIV, P, H1. UM EXEMPLO DO QUE PODE ACONTECER COM UM ELEMENTO COMO EXEMPLO SÃO EVENTOS DE MOUSE, OU EVENTOS DE MOVIMENTOS DO MOUSE(MOUSEENTER, MOUSEMOVE, MOUSEDOWN, MOUSEUP, CLICK, MOUSEOUT) OUSEJA, DISPARADAS DE EVENTSO
+        PARA UM EVENTO DIPARAR É NECESSÁRIO UMA FUNÇÃO E UMA FUNÇÃO É UM CONJUNTO DE códigoS. A ESTRUTURA PODE SER:
+        function ação(parametros){
+
+        }
