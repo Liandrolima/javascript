@@ -284,3 +284,45 @@ switch(diaSem) { //usado em dados pontuais(números inteiros e strings) não dev
         console.log('[ERRO] Dia inválido!')
         break
 }
+
+#########################################################################################################################
+Nascionalidade
+exercício 1
+
+var país = 'Brasil'
+console.log(`Vivendo em ${país}`)
+if (país == 'Brasil') {
+    console.log('Brasileiro!')
+}else {
+    console.log('Estrangeiro!')
+}
+
+exercício 2
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministério da Cidadania</title>
+</head>
+<body>
+    <h1>Nascionalidade</h1>
+    <input type="text" name="txtcid" id="txtcid">País
+    <input type="button" value="Verificar" onclick="verificar()">
+    <div id="res">
+
+    </div>
+    <script>
+        function verificar() {
+            var txtc = window.document.querySelector('input#txtcid')
+            var res = window.document.querySelector('div#res')
+            var cid = (txtc.value)            
+            if (cid == 'Brasil') {
+                res.innerHTML = `<p>Você esta vivendo no ${cid}. Sua cidadania é: Brasileira!</p>`
+            } else {
+                res.innerHTML = `<p> Você esta vivendo no ${cid}. Sua cidadania é: Estrangeira!</p>`
+            }
+        }
+    </script>
+</body>
+</html>
