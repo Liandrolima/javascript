@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap');
+
+body {
+    background-color: #af6900;
+    font-family: "New Amsterdam", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+#game-variants {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.card {
+    background-image: url("https://d2d7ho1ae66ldi.cloudfront.net/ArquivoNoticias/0f64ed3e-cd1c-11eb-aa6e-9587410378a2/chrome_2021-06-14_11-21-01.png");
+    background-size: cover; /* Garante que a imagem de capa preencha o card */
+    background-position: center; /* Centraliza a imagem de capa */
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: background-image 0.3s ease;
+}
+
+.txt {
+    font-family: "Open-sans", sans-serif;
+    font-weight: 200;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit:unset;
+    object-position: center;
+    display: none;
+    transition: opacity 0.3s ease;
+}
+
+.card.flipped img {
+    display: block;
+}
+
+.card.flipped {
+    background-image: none;
+    background-color: #010101;
+}
+
+#message {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
