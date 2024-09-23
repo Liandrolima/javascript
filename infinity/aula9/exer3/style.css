@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+body {
+    font-family: Arial, sans-serif;
+}
+#container {
+    margin: 20px;
+}
+p {
+    margin: 5px 0;
+}
