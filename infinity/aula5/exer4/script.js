@@ -6,4 +6,7 @@ DEPOIS CALCULE A MÉDIA DAS NOTAS
 
 DEPOIS CHEQUE SE O ALUNO FOI APROVADO OU REPROVADO (MÉDIA 7)*/
 
-const nota = parseFloat(prompt("Digite a nota"))
+for(let i = 1; i <=4; i++){
+    const nota = Number(prompt("Digite uma nota"))
+    alert({nota});
+}
