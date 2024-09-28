@@ -43,8 +43,3 @@ function addNote() {
 addNoteButton.addEventListener('click', addNote);
 
 // Evento de pressionar Enter no campo de texto
-noteText.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        addNote();
-    }
-});
