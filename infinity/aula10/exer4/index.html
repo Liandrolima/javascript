@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC</title>
+</head>
+<body>
+    <h1>IMC</h1>
+<fieldset>
+    <legend>Índice de Massa Corporal</legend>
+    <p>
+        <label for="ipeso">Digite seu peso</label>
+        <input type="number" name="peso" id="ipeso" step="0.1"> <!-- Step adicionado para permitir decimais -->
+        
+        <label for="ialtura">Digite sua altura</label>
+        <input type="number" name="altura" id="ialtura" step="0.01"> <!-- Step adicionado para altura com decimais -->
+        
+        <input type="button" value="Calcular IMC" onclick="imc()">
+        <input type="button" value="Limpar" onclick="limpar()">
+    </p>
+    <div id="res">Resultado</div> <!-- Certifique-se que o ID é 'res' -->
+</fieldset>
+<div id="mensagem"></div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
