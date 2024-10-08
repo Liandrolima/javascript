@@ -26,7 +26,7 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
         const currentText = newTask.querySelector('span').innerText;        
         const taskText = prompt('Edite a tarefa:', currentText); // Edita o texto da tarefa existente        
         if (taskText !== null) {
-          newTask.querySelector('span').innerText = taskText;                    
+          newTask.querySelector('span').innerText = taskText.toUpperCase();                    
         }
       });
     
