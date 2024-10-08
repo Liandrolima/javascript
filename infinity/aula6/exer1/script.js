@@ -3,7 +3,7 @@
 //em uma string fornecida pelo usuário. Por exemplo, o usuário informa
 //a string “Beterraba”, e a função retorna o número 4 (há 4 vogais nessa palavra).
 
-let palavra = prompt("Digite uma palavra e eu lhe direi quantas vogais ele tem")
+let palavra = prompt("Digite uma palavra e eu lhe direi quantas vogais ela tem")
 function countVowelsInString(palavra) {
     const vowels = 'aeiouAEIOU';
     let count = 0;
