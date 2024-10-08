@@ -10,10 +10,9 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
     newTask.innerHTML = `
       <span>${taskInput.value.toUpperCase()}</span>
       <div>
-        <button class="edit">Editar Tarefa</button>
-    <label>Status da Tarefa</label>
+        <button class="edit">Editar Tarefa</button>    
     <select class="tarefa">
-        <option value=" " disabled select>Status</option>
+        <option value="status">Status da Tarefa</option>
         <option value="iniciar">Iniciar</option>
         <option value="ocorrendo">Em processo</option>
         <option value="concluida">Concluida</option>
@@ -40,6 +39,8 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
           taskText.style.color = "orange"; // Muda para cor laranja se "Em processo" for selecionado
         } else if (selectedStatus === "concluida") {
           taskText.style.color = "green"; // Muda para cor verde se "Concluída" for selecionado
+        } else if (selectedStatus === "status") {
+          taskText.style.color = "black";
         }
     });
     
@@ -55,4 +56,9 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
     // Limpar o campo de entrada
     taskInput.value = '';
   });
+
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('mensagem').innerHTML = 'Jesus só salva se renunciar!'
+});
   
