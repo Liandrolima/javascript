@@ -1,5 +1,5 @@
 const questions = [
-    "São processos administrativos.Exceto:",
+    "São processos administrativos. Exceto:",
     "Função administrativa que consiste em verificar se as coisas estão sendo feitas de acordo com o plano adotado, as instruções transmitidas e os princípios estabelecidos.",
     "As funções do administrador e as funções básicas de uma empresa foram apresentadas no",
     "Estrutura organizacional baseada no modelo piramidal é conhecida como:",
@@ -10,58 +10,94 @@ const questions = [
     "São princípios da burocracia:",
     "Princípios adotados por Ford:"
 ];
+
 const options = [
     ["Planejamento e direção", "Organização e controle", "Planejamento e controle", "Coordenação e departamentalização"],
     ["Previsão", "Controle", "Coordenação", "Organização"],
     ["Taylorismo", "Fordismo", "Fayolismo", "Humanismo"],
-    ["Staff","Linear", "Organização formal", "Funcional"],
-    ["Divisão do trabalho, autoridade e responsabilidade, disciplina, unidade de comando.","Estabelecimento de recursos, unidade de direção", "Planejamento, controle e coordenação.", "Tempos e movimentos, liderança, efetividade e eficiência."],
-    ["Divisão do trabalho e especialização do operário, estudo da fadiga humana, hierarquia e autoridade.","Desenho de cargos e de tarefas, estudo da fadiga humana, conceito de homo economicus.", "Padronização de métodos e de máquinas, estudo da organização informal.", "Divisão do trabalho, incentivos salariais e prêmios de produção, ênfase na estrutura organizacional"],
+    ["Staff", "Linear", "Organização formal", "Funcional"],
+    ["Divisão do trabalho, autoridade e responsabilidade, disciplina, unidade de comando.", "Estabelecimento de recursos, unidade de direção", "Planejamento, controle e coordenação.", "Tempos e movimentos, liderança, efetividade e eficiência."],
+    ["Divisão do trabalho e especialização do operário, estudo da fadiga humana, hierarquia e autoridade.", "Desenho de cargos e de tarefas, estudo da fadiga humana, conceito de homo economicus.", "Padronização de métodos e de máquinas, estudo da organização informal.", "Divisão do trabalho, incentivos salariais e prêmios de produção, ênfase na estrutura organizacional"],
     ["Tradicional, carismática, racional-legal", "Tradicional, carismática, racional-legal, racional-legal", "Tradicional, carismática, carismática, racional-legal", "Sinceramente não sei"],
     ["Produção, vendas, pessoal e finanças", "Planejamento, organização, direção e controle.", "Pesquisa, previsão, planejamento, organização e controle.", "Técnica, comercial, contábil, segurança e administração."], 
     ["Hierarquia e autoridade, profissionalização dos participantes, especialização da administração, competência técnica e meritocracia, pessoalidade nas relações", "Rotinas e procedimentos padronizados, caráter informal das comunicações, especialização da administração.", "Completa previsibilidade do funcionamento, competência técnica e meritocracia,hierarquia e autoridade, profissionalismo dos participantes.", "Rotinas e procedimentos padronizados, competência técnica e antiguidade, hierarquia e autoridade, competência técnica e meritocracia, profissionalização dos participantes, caráter racional e divisão do trabalho "],
-    ["Planejamento, intensificação, coordenação.", "Intencificação, economicidade, empregabilidade.", "produtividade, economicidade, intensificação.", "Produtividade, economicidade, execução, intencificação."]       
+    ["Planejamento, intensificação, coordenação.", "Intensificação, economicidade, empregabilidade.", "Produtividade, economicidade, intensificação.", "Produtividade, economicidade, execução, intensificação."]
 ];
-const correctAnswers = [3,1,2,1,0,1,1,3,2,2];
 
-let roletaButton = document.querySelector('#roleta')
+const correctAnswers = [3, 1, 2, 1, 0, 1, 1, 3, 2, 2];
+
+let score = 0;  // Pontuação do usuário
+let questionsDone = [];  // Perguntas já respondidas
+let nowQuestion;
+const roletaButton = document.querySelector('#roleta');
 roletaButton.style.display = "none";
-let nowQuestion = Math.floor(Math.random() * questions.length);
 
-generateQuestions();
-selectButton();
+// Gera uma pergunta aleatória que ainda não foi feita
+function getRandomQuestion() {
+    if (questionsDone.length === questions.length) {
+        showFinalScore();  // Exibe a pontuação final quando todas as perguntas forem feitas
+        return;
+    }
 
-function generateQuestions(){
+    do {
+        nowQuestion = Math.floor(Math.random() * questions.length);
+    } while (questionsDone.includes(nowQuestion));
+
+    questionsDone.push(nowQuestion);
     
     document.querySelector("#question").innerHTML = questions[nowQuestion];
+    const optionsContainer = document.querySelectorAll('.alternative');
     
-    const optionsContainer = document.querySelectorAll('button');
-    optionsContainer.forEach((element,index) =>{element.textContent = options[nowQuestion][index]});
-    
+    optionsContainer.forEach((element, index) => {
+        element.textContent = options[nowQuestion][index];
+        element.setAttribute('data-value', index);
+    });
 }
 
-function selectButton(){
-    const alternativas = document.querySelectorAll('.alternativa');
-
-    alternativas.forEach(button =>{
+// Adiciona eventos de clique aos botões de alternativas
+function selectButton() {
+    const alternativas = document.querySelectorAll('.alternative');
+    
+    alternativas.forEach(button => {
         button.addEventListener('click', () => {
-            const answer = button.value;0 
+            const answer = parseInt(button.getAttribute('data-value'));
             checkAnswer(answer);
-    })
-})
+        });
+    });
 }
 
-function checkAnswer(answer){
-    answer = parseInt(answer);
-    let statusAnswer = document.querySelector("#statusAnswer");
-    if(answer == correctAnswers[nowQuestion]){
-        statusAnswer.innerHTML = "Acertou!!!"
+// Verifica se a resposta está correta
+function checkAnswer(answer) {
+    const statusAnswer = document.querySelector("#statusAnswer");
+    
+    if (answer === correctAnswers[nowQuestion]) {
+        statusAnswer.innerHTML = "Acertou!!!";
+        score++;  // Incrementa a pontuação
+    } else {
+        statusAnswer.innerHTML = `Errou! Resposta correta: ${options[nowQuestion][correctAnswers[nowQuestion]]}`;
     }
-    else{
-        console.log
-        statusAnswer.innerHTML = `Errou meu chapa, resposta correta ${options[nowQuestion][correctAnswers[nowQuestion]]}`
-    }
-    roletaButton.style.display = "block";
+    
+    roletaButton.style.display = "block";  // Exibe o botão para gerar nova pergunta
 }
 
-document.querySelector('#roleta').addEventListener('click', () => location.reload())
+// Exibe a pontuação final e a nota
+function showFinalScore() {
+    const totalQuestions = questions.length;
+    const finalScore = score;
+    
+    // Exibe a mensagem final com a pontuação e a nota
+    document.querySelector("#question").innerHTML = "Você respondeu todas as perguntas!";
+    document.querySelector("#statusAnswer").innerHTML = `Você acertou ${finalScore} de ${totalQuestions} perguntas.<br>Sua nota final é: ${finalScore}/${totalQuestions}.`;
+    
+    // Esconde o botão roleta para não gerar mais perguntas
+    roletaButton.style.display = "none";
+}
+
+roletaButton.addEventListener('click', () => {
+    getRandomQuestion();
+    roletaButton.style.display = "none";
+});
+
+// Inicializa o quiz
+getRandomQuestion();
+selectButton();
