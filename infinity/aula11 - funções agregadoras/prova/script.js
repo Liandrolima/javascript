@@ -32,6 +32,17 @@ let nowQuestion;
 const roletaButton = document.querySelector('#roleta');
 roletaButton.style.display = "none";
 
+function submitName() {
+    const name = document.getElementById('nameInput').value;
+    const greeting = document.getElementById('greeting');
+    
+    if(name) {
+        greeting.innerHTML = `Olá, ${name}! Bem-vindo!`;
+    } else {
+        greeting.innerHTML = "Por favor, insira seu nome.";
+    }
+}
+
 // Gera uma pergunta aleatória que ainda não foi feita
 function getRandomQuestion() {
     if (questionsDone.length === questions.length) {
@@ -80,17 +91,24 @@ function checkAnswer(answer) {
     roletaButton.style.display = "block";  // Exibe o botão para gerar nova pergunta
 }
 
-// Exibe a pontuação final e a nota
+// Exibe a pontuação final e remove todos os outros elementos
 function showFinalScore() {
     const totalQuestions = questions.length;
     const finalScore = score;
     
-    // Exibe a mensagem final com a pontuação e a nota
-    document.querySelector("#question").innerHTML = "Você respondeu todas as perguntas!";
-    document.querySelector("#statusAnswer").innerHTML = `Você acertou ${finalScore} de ${totalQuestions} perguntas.<br>Sua nota final é: ${finalScore}/${totalQuestions}.`;
+    // Remove todos os elementos exceto a mensagem final
+    document.body.innerHTML = "";  // Limpa todo o conteúdo da página
+
+    const questionDiv = document.createElement('div');
+    questionDiv.id = "question";
+    questionDiv.innerHTML = "Você respondeu todas as perguntas!";
     
-    // Esconde o botão roleta para não gerar mais perguntas
-    roletaButton.style.display = "none";
+    const statusAnswerDiv = document.createElement('div');
+    statusAnswerDiv.id = "statusAnswer";
+    statusAnswerDiv.innerHTML = `Você acertou ${finalScore} de ${totalQuestions} perguntas.<br>Sua nota final é: ${finalScore}.`;
+    
+    document.body.appendChild(questionDiv);
+    document.body.appendChild(statusAnswerDiv);
 }
 
 roletaButton.addEventListener('click', () => {
