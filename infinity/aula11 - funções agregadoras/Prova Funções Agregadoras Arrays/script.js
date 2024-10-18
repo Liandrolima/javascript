@@ -26,24 +26,31 @@ const options = [
 
 const correctAnswers = [3, 1, 2, 1, 0, 1, 1, 3, 2, 2];
 
-let score = 0;  // Pontuação do usuário
-let questionsDone = [];  // Perguntas já respondidas
+let score = 0;  
+let questionsDone = [];  
+let correctQuestions = [];
+let wrongQuestions = [];
 let nowQuestion;
 const roletaButton = document.querySelector('#roleta');
 roletaButton.style.display = "none";
 
 function submitName() {
-    const name = document.getElementById('nameInput').value;
-    const greeting = document.getElementById('greeting');
+    const name = document.querySelector('#nameInput').value;
+    const greeting = document.querySelector('#greeting');
+    const questionsContainer = document.querySelector('#questions');
     
-    if(name) {
+    if (name) {
         greeting.innerHTML = `Olá, ${name}! Bem-vindo!`;
+        greeting.style.color = '#4CAF50'; 
+        questionsContainer.style.display = 'block';
+        document.querySelector('.input-container').style.display = 'none';
+        getRandomQuestion();
     } else {
         greeting.innerHTML = "Por favor, insira seu nome.";
+        greeting.style.color = 'red';
     }
 }
 
-// Gera uma pergunta aleatória que ainda não foi feita
 function getRandomQuestion() {
     if (questionsDone.length === questions.length) {
         showFinalScore();  // Exibe a pontuação final quando todas as perguntas forem feitas
@@ -62,10 +69,12 @@ function getRandomQuestion() {
     optionsContainer.forEach((element, index) => {
         element.textContent = options[nowQuestion][index];
         element.setAttribute('data-value', index);
+        element.disabled = false;  // Certifica-se de que os botões estão habilitados
+        element.style.pointerEvents = 'auto';  // Reativa os botões
+        element.style.opacity = '1';  // Restabelece a aparência padrão
     });
 }
 
-// Adiciona eventos de clique aos botões de alternativas
 function selectButton() {
     const alternativas = document.querySelectorAll('.alternative');
     
@@ -73,31 +82,39 @@ function selectButton() {
         button.addEventListener('click', () => {
             const answer = parseInt(button.getAttribute('data-value'));
             checkAnswer(answer);
+            disableButtons();
         });
     });
 }
 
-// Verifica se a resposta está correta
+function disableButtons() {
+    const alternativas = document.querySelectorAll('.alternative');
+    alternativas.forEach(button => {
+        button.style.pointerEvents = 'none';  // Desabilita o clique
+        button.style.opacity = '0.6';  // Muda a aparência para indicar desativado
+    });
+}
+
 function checkAnswer(answer) {
     const statusAnswer = document.querySelector("#statusAnswer");
     
     if (answer === correctAnswers[nowQuestion]) {
         statusAnswer.innerHTML = "Acertou!!!";
-        score++;  // Incrementa a pontuação
+        score++;  
+        correctQuestions.push(questions[nowQuestion]);
     } else {
         statusAnswer.innerHTML = `Errou! Resposta correta: ${options[nowQuestion][correctAnswers[nowQuestion]]}`;
+        wrongQuestions.push(questions[nowQuestion]);
     }
     
-    roletaButton.style.display = "block";  // Exibe o botão para gerar nova pergunta
+    roletaButton.style.display = "block";  
 }
 
-// Exibe a pontuação final e remove todos os outros elementos
 function showFinalScore() {
     const totalQuestions = questions.length;
     const finalScore = score;
     
-    // Remove todos os elementos exceto a mensagem final
-    document.body.innerHTML = "";  // Limpa todo o conteúdo da página
+    document.body.innerHTML = "";  
 
     const questionDiv = document.createElement('div');
     questionDiv.id = "question";
@@ -107,15 +124,39 @@ function showFinalScore() {
     statusAnswerDiv.id = "statusAnswer";
     statusAnswerDiv.innerHTML = `Você acertou ${finalScore} de ${totalQuestions} perguntas.<br>Sua nota final é: ${finalScore}.`;
     
+    const resultMessage = document.createElement('p');
+    if (finalScore === 10) {
+        resultMessage.innerHTML = "Excelente! Sua nota foi " + finalScore;
+    } else if (finalScore === 9) {
+        resultMessage.innerHTML = "Ótimo! Sua nota foi " + finalScore;
+    } else if (finalScore === 7 || finalScore === 8) {
+        resultMessage.innerHTML = "Bom! Sua nota foi " + finalScore;
+    } else if (finalScore === 5 || finalScore === 6) {
+        resultMessage.innerHTML = "Regular! Sua nota foi " + finalScore;
+    } else if (finalScore === 3 || finalScore === 4) {
+        resultMessage.innerHTML = "Ruim! Sua nota foi " + finalScore; ;
+    } else if (finalScore <= 2) {
+        resultMessage.innerHTML = "Precisa melhorar.";
+}
+
+const correctDiv = document.createElement('div');
+    correctDiv.innerHTML = `<strong>Questões corretas:</strong> <br> ${correctQuestions.join('<br>')}`;
+
+    const wrongDiv = document.createElement('div');
+    wrongDiv.innerHTML = `<strong>Questões erradas:</strong> <br> ${wrongQuestions.join('<br>')}`;
+    
     document.body.appendChild(questionDiv);
     document.body.appendChild(statusAnswerDiv);
+    document.body.appendChild(correctDiv);
+    document.body.appendChild(wrongDiv);
+    document.body.appendChild(resultMessage);
 }
 
 roletaButton.addEventListener('click', () => {
     getRandomQuestion();
     roletaButton.style.display = "none";
+    statusAnswer.innerHTML = ''
 });
 
-// Inicializa o quiz
-getRandomQuestion();
+
 selectButton();
