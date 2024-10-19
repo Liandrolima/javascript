@@ -19,7 +19,7 @@ const options = [
     ["Divisão do trabalho, autoridade e responsabilidade, disciplina, unidade de comando.", "Estabelecimento de recursos, unidade de direção", "Planejamento, controle e coordenação.", "Tempos e movimentos, liderança, efetividade e eficiência."],
     ["Divisão do trabalho e especialização do operário, estudo da fadiga humana, hierarquia e autoridade.", "Desenho de cargos e de tarefas, estudo da fadiga humana, conceito de homo economicus.", "Padronização de métodos e de máquinas, estudo da organização informal.", "Divisão do trabalho, incentivos salariais e prêmios de produção, ênfase na estrutura organizacional"],
     ["Tradicional, carismática, racional-legal", "Tradicional, carismática, racional-legal, racional-legal", "Tradicional, carismática, carismática, racional-legal", "Sinceramente não sei"],
-    ["Produção, vendas, pessoal e finanças", "Planejamento, organização, direção e controle.", "Pesquisa, previsão, planejamento, organização e controle.", "Técnica, comercial, contábil, segurança e administração."], 
+    ["Produção, vendas, pessoal e finanças", "Planejamento, organização, direção e controle.", "Pesquisa, previsão, planejamento, organização e controle.", "Técnica, comercial, contábil, segurança e administração."],
     ["Hierarquia e autoridade, profissionalização dos participantes, especialização da administração, competência técnica e meritocracia, pessoalidade nas relações", "Rotinas e procedimentos padronizados, caráter informal das comunicações, especialização da administração.", "Completa previsibilidade do funcionamento, competência técnica e meritocracia,hierarquia e autoridade, profissionalismo dos participantes.", "Rotinas e procedimentos padronizados, competência técnica e antiguidade, hierarquia e autoridade, competência técnica e meritocracia, profissionalização dos participantes, caráter racional e divisão do trabalho "],
     ["Planejamento, intensificação, coordenação.", "Intensificação, economicidade, empregabilidade.", "Produtividade, economicidade, intensificação.", "Produtividade, economicidade, execução, intensificação."]
 ];
@@ -113,17 +113,21 @@ function checkAnswer(answer) {
 function showFinalScore() {
     const totalQuestions = questions.length;
     const finalScore = score;
-    
+    const name = document.querySelector('#nameInput').value;
+
+    // Enviar os dados para o servidor aqui
+    sendResultsToDatabase(name, finalScore, "Sua mensagem", questions);
+
     document.body.innerHTML = "";  
 
     const questionDiv = document.createElement('div');
     questionDiv.id = "question";
     questionDiv.innerHTML = "Você respondeu todas as perguntas!";
-    
+
     const statusAnswerDiv = document.createElement('div');
     statusAnswerDiv.id = "statusAnswer";
     statusAnswerDiv.innerHTML = `Você acertou ${finalScore} de ${totalQuestions} perguntas.<br>Sua nota final é: ${finalScore}.`;
-    
+
     const resultMessage = document.createElement('p');
     if (finalScore === 10) {
         resultMessage.innerHTML = "Excelente! Sua nota foi " + finalScore;
@@ -133,18 +137,16 @@ function showFinalScore() {
         resultMessage.innerHTML = "Bom! Sua nota foi " + finalScore;
     } else if (finalScore === 5 || finalScore === 6) {
         resultMessage.innerHTML = "Regular! Sua nota foi " + finalScore;
-    } else if (finalScore === 3 || finalScore === 4) {
-        resultMessage.innerHTML = "Ruim! Sua nota foi " + finalScore; ;
-    } else if (finalScore <= 2) {
+    } else if (finalScore <= 4) {
         resultMessage.innerHTML = "Precisa melhorar.";
-}
+    }
 
-const correctDiv = document.createElement('div');
+    const correctDiv = document.createElement('div');
     correctDiv.innerHTML = `<strong>Questões corretas:</strong> <br> ${correctQuestions.join('<br>')}`;
 
     const wrongDiv = document.createElement('div');
     wrongDiv.innerHTML = `<strong>Questões erradas:</strong> <br> ${wrongQuestions.join('<br>')}`;
-    
+
     document.body.appendChild(questionDiv);
     document.body.appendChild(statusAnswerDiv);
     document.body.appendChild(correctDiv);
@@ -155,8 +157,34 @@ const correctDiv = document.createElement('div');
 roletaButton.addEventListener('click', () => {
     getRandomQuestion();
     roletaButton.style.display = "none";
-    statusAnswer.innerHTML = ''
+    document.querySelector("#statusAnswer").innerHTML = '';
 });
 
-
 selectButton();
+
+// Função para enviar os resultados para o banco de dados
+const sendResultsToDatabase = (name, score, resultMessage, answers) => {
+    console.log("Enviando resultados ao servidor...");  // Log para verificar chamada da função
+    
+    fetch('http://localhost:3000/resultados', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nome: name,
+            acertos: score,
+            total: answers.length // Total de respostas
+        })
+    })
+    .then(response => {
+        console.log("Resposta recebida:", response);  // Log da resposta do servidor
+        return response.json();
+    })
+    .then(data => {
+        console.log("Dados retornados pelo servidor:", data);  // Log dos dados retornados
+    })
+    .catch(error => {
+        console.error('Erro ao enviar dados:', error);  // Log de erro
+    });
+};

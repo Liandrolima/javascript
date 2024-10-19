@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
@@ -10,10 +10,10 @@ app.use(bodyParser.json());
 
 // Configuração do banco de dados
 const db = mysql.createConnection({
-    host: 'localhost', // Substitua pelo seu host
-    user: 'root', // Substitua pelo seu usuário do MySQL
-    password: 'Mysql102030', // Substitua pela sua senha do MySQL
-    database: 'quiz_db' // Substitua pelo nome do seu banco de dados
+    host: 'localhost',
+    user: 'root',
+    password: 'Mysql102030', // Altere para sua senha do MySQL
+    database: 'quiz_db' // Altere para o nome do seu banco de dados
 });
 
 // Conecta ao banco de dados
@@ -39,13 +39,13 @@ app.post('/resultados', (req, res) => {
 });
 
 // Inicia o servidor
-const PORT = 3000; // Você pode escolher outra porta se preferir
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 // Função para enviar resultados para o banco de dados
-const sendResultsToDatabase = (name, score, resultMessage, answers) => {
+const sendResultsToDatabase = (name, score, answers) => {
     fetch('http://localhost:3000/resultados', {
         method: 'POST',
         headers: {
@@ -57,7 +57,7 @@ const sendResultsToDatabase = (name, score, resultMessage, answers) => {
             total: answers.length // Total de respostas
         })
     })
-    .then(response => response.json()) // Alterado para JSON
+    .then(response => response.json())
     .then(data => {
         console.log(data);
     })
@@ -67,11 +67,12 @@ const sendResultsToDatabase = (name, score, resultMessage, answers) => {
 };
 
 // Exemplo de como você poderia chamar essa função no final do quiz
+// Remova ou adapte isso para quando realmente tiver os resultados do quiz
 const answers = [
     { question: "Pergunta 1", userAnswer: "Resposta 1", correctAnswer: "Resposta 1" },
     { question: "Pergunta 2", userAnswer: "Resposta 2", correctAnswer: "Resposta 3" },
     // Adicione todas as respostas do quiz
 ];
 
-// Enviar resultados como exemplo
-sendResultsToDatabase("João", 8, "Bom", answers);
+// Enviar resultados como exemplo - remova ou adapte conforme necessário
+sendResultsToDatabase();
