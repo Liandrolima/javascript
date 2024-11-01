@@ -17,7 +17,12 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
         <option value="ocorrendo">Em processo</option>
         <option value="concluida">Concluida</option>
     </select>
-        <button class="delete">Excluir Tarefa</button>
+    <select class="delete">
+    <option value="delete">Excluir Tarefa</option>
+        <option value="excluir">Tem Certeza</option>
+        <option value="no">Não excluir tarefa</option>
+    </select>
+        
       </div>
     `;
   
@@ -47,8 +52,15 @@ document.getElementById('taskForm').addEventListener('submit', function(e) {
     
      
     newTask.querySelector('.delete').addEventListener('click', function() {
-      newTask.remove();
-    });
+      const confirmDelete = confirm("Tem certeza de que deseja excluir esta tarefa?");
+      if (confirmDelete) {
+        newTask.remove();
+        alert("Tarefa excluída com sucesso!");
+      } else {
+        alert("Tranquilo, tarefa não será excluída.");
+      }
+});
+
   
     // Adicionar a nova tarefa à lista
     taskList.appendChild(newTask);
