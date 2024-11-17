@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somando Números</title>
+    <style>
+        body {
+            font: normal 18pt Arial;
+        }
+        input {
+            font: normal 18pt Arial;
+            width: 100px;
+        }
+        div#res {
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        #reloadButton {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Somando Valores</h1>
+    <input type="number" name="txtn1" id="txtn1" placeholder="Digite o 1º número"> + 
+    <input type="number" name="txtn2" id="txtn2" placeholder="Digite o 2º número">
+    <input id="saveButton" type="button" value="Somar" onclick="validar()">
+    
+    <div id="res">Resultado</div>
+    <div id="error" class="error"></div>
+    
+    <button id="reloadButton" onclick="window.location.reload();">Recarregar Página</button>
+    
+    <script>
+        function validar() {
+            // Limpar mensagens anteriores
+            document.getElementById('error').innerHTML = '';
+            document.getElementById('res').innerHTML = 'Resultado';
+            
+            var tn1 = document.getElementById('txtn1');
+            var tn2 = document.getElementById('txtn2');
+            var errorMsg = '';
+
+            // Verificação de campos vazios
+            if (tn1.value === '' || tn2.value === '') {
+                errorMsg += 'Por favor, preencha ambos os campos com números válidos. <br>';
+            }
+
+            // Verificação se os valores são números
+            var n1 = Number(tn1.value);
+            var n2 = Number(tn2.value);
+
+            if (isNaN(n1) || isNaN(n2)) {
+                errorMsg += 'Os valores inseridos não são números válidos. <br>';
+            }
+
+            // Se houver erro, exibir mensagem de erro
+            if (errorMsg !== '') {
+                document.getElementById('error').innerHTML = errorMsg;
+                document.getElementById('reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
+            } else {
+                // Se não houver erro, realizar a soma
+                var s = n1 + n2;
+                document.getElementById('res').innerHTML = `A soma entre ${n1} e ${n2} é igual a <strong>${s}</strong>`;
+                document.getElementById('reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
+            }
+        }
+    </script>
+</body>
+</html>
