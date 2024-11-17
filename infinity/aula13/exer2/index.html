@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Event Listener com Try e Catch</title>
+    <style>
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+    </style>
+    <script>
+        // Função que será chamada quando o botão for clicado
+        function handleClick(event) {
+            try {
+                // Simulando uma operação que pode lançar um erro
+                let num = Math.random();
+                if (num > 0.5) {
+                    throw new Error("Ocorreu um erro inesperado durante a ação!");
+                }
+
+                // Se não ocorrer erro, simula uma ação bem-sucedida
+                document.getElementById('result').innerText = 'Ação realizada com sucesso!';
+                document.getElementById('result').style.backgroundColor = 'lightgreen';
+                document.getElementById('result').style.display = 'block';
+
+            } catch (error) {
+                // Se ocorrer um erro, exibe uma mensagem amigável
+                document.getElementById('result').innerText = `Erro: ${error.message}`;
+                document.getElementById('result').style.backgroundColor = 'lightcoral';
+                document.getElementById('result').style.display = 'block';
+            }
+        }
+
+        // Adicionando o event listener ao botão
+        window.onload = function() {
+            const button = document.getElementById('actionButton');
+            button.addEventListener('click', handleClick);
+        };
+    </script>
+</head>
+<body>
+
+    <h2>Testando Event Listener com Try e Catch</h2>
+    <button id="actionButton">Clique aqui para executar uma ação</button>
+    
+    <div id="result"></div>
+
+</body>
+</html>

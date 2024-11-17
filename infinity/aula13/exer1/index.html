@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Formulário</title>
+    <script>
+        function validarFormulario(event) {
+            event.preventDefault();  // Impede o envio do formulário caso haja erro
+
+            // Obtém os valores dos campos
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const idade = document.getElementById('idade').value;
+            
+            try {
+                // Valida o nome (não pode estar vazio)
+                if (!nome) {
+                    throw new Error("O nome é obrigatório.");
+                }
+                
+                // Valida o email (deve ter um formato válido)
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                if (!emailRegex.test(email)) {
+                    throw new Error("O e-mail fornecido não é válido.");
+                }
+                
+                // Valida a idade (deve ser um número positivo)
+                if (!idade || isNaN(idade) || idade <= 0) {
+                    throw new Error("A idade deve ser um número válido e maior que 0.");
+                }
+
+                // Se tudo estiver correto, simula o envio do formulário
+                alert("Formulário enviado com sucesso!");
+            } catch (error) {
+                // Exibe a mensagem de erro ao usuário
+                alert("Erro: " + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Formulário de Cadastro</h2>
+
+    <form onsubmit="validarFormulario(event)">
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome">
+        </div>
+
+        <div>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+        </div>
+
+        <div>
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade">
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+</body>
+</html>
