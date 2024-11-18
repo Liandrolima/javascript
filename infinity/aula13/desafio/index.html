@@ -4,9 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula 13 - Desafio</title>
+    <style>
+        body {
+            font: normal 18pt Arial;
+        }
+        input {
+            font: normal 18pt Arial;
+            width: 100px;
+        }
+       
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        
+    </style>
 </head>
 <body>
-    <h1>try e catch </h1>
+    <h1>Tente adivinhar o número secreto entre 1 e 10!</h1>
+    <input type="number" name="txtn1" id="txtn1" placeholder="Digite seu palpite:"> 
+    
+    <input id="saveButton" type="button" value="Verificar" onclick="validar()">
+    
+    
+    <div id="error" class="error"></div>
+    
+    
+</head>
+<body>
+    
     <script src="./script.js"></script>
 </body>
 </html>

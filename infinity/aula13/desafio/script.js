@@ -19,36 +19,57 @@ estiver errado, informe ao jogador se o número escolhido pelo computador
 
 let numeroSecreto = Math.floor(Math.random() * 10) + 1;
 let tentativasRestantes = 3;
-console.log("Tente adivinhar o número secreto entre 1 e 10!");
 
-while (tentativasRestantes > 0) {
-    
-    let palpite = parseInt(prompt("Digite seu palpite:"));
+function validar() {
+    const palpite = document.querySelector('#txtn1').value;
+    document.querySelector('#error').innerHTML = ''; // Limpar qualquer mensagem de erro anterior
 
     try {
         // Verificação de campos vazios
         if (palpite === '') {
-            throw new Error('Por favor, preencha ambos os campos com números válidos.');
+            throw new Error('Por favor, preencha com um número válido.');
         }
 
-        if (isNaN(palpite)) {
-            throw new Error('Os valores inseridos não são números válidos.');
-        }}catch (erro) {
-            console.error("Ocorreu um erro", erro.mensagem);
+        if (palpite > 10) {
+            throw new Error('Por favor, preencha com um número de 0 até 10.');
         }
-        
-        
-                
-    if (palpite === numeroSecreto) {
-        console.log("Parabéns! Você adivinhou o número!");
-        break; 
-    } else {
-        tentativasRestantes--; 
-        console.log(`Errado! Você tem ${tentativasRestantes} tentativas restantes.`);
-    }
 
-    
-    if (tentativasRestantes === 0) {
-        console.log(`Você perdeu! O número secreto era ${numeroSecreto}.`);
+        // Converter o palpite para número
+        const palpiteNumerico = Number(palpite);
+
+        // Verificar se o palpite é um número válido
+        if (isNaN(palpiteNumerico)) {
+            throw new Error('Por favor, insira um número válido.');
+        }
+
+        // Verificar se o palpite é correto
+        if (palpiteNumerico === numeroSecreto) {
+            document.querySelector('#error').innerHTML = "Parabéns! Você adivinhou o número!";
+            document.querySelector('#error').style.color = '#4CAF50';
+            console.log("Parabéns! Você adivinhou o número!");
+            // Reiniciar o jogo
+            reiniciarJogo();
+        } else {
+            tentativasRestantes--;
+            if (tentativasRestantes > 0) {
+                document.querySelector('#error').innerHTML = `Errado! Você tem ${tentativasRestantes} tentativas restantes.`;
+                console.log(`Errado! Você tem ${tentativasRestantes} tentativas restantes.`);
+            } else {
+                document.querySelector('#error').innerHTML = `Você perdeu! O número secreto era ${numeroSecreto}.`;
+                console.log(`Você perdeu! O número secreto era ${numeroSecreto}.`);
+                // Reiniciar o jogo
+                reiniciarJogo();
+            }
+        }
+    } catch (error) {
+        document.querySelector('#error').innerHTML = "Erro: " + error.message;
+        console.error("Erro: ", error.message);
     }
+}
+
+function reiniciarJogo() {
+    numeroSecreto = Math.floor(Math.random() * 10) + 1;
+    tentativasRestantes = 3;
+    // Limpar o campo de entrada de dados
+    document.querySelector('#txtn1').value = '';
 }
