@@ -39,35 +39,37 @@
     <script>
         function validar() {
             // Limpar mensagens anteriores
-            document.getElementById('error').innerHTML = '';
-            document.getElementById('res').innerHTML = 'Resultado';
+            document.querySelector('#error').innerHTML = '';
+            document.querySelector('#res').innerHTML = 'Resultado';
+            document.querySelector('#reloadButton').style.display = 'none'; // Esconde o botão de recarregar
             
-            var tn1 = document.getElementById('txtn1');
-            var tn2 = document.getElementById('txtn2');
-            var errorMsg = '';
+            const tn1 = document.querySelector('#txtn1').value;
+            const tn2 = document.querySelector('#txtn2').value;
+            const errorMsg = '';
 
-            // Verificação de campos vazios
-            if (tn1.value === '' || tn2.value === '') {
-                errorMsg += 'Por favor, preencha ambos os campos com números válidos. <br>';
-            }
+            try {
+                // Verificação de campos vazios
+                if (tn1 === '' || tn2 === '') {
+                    throw new Error('Por favor, preencha ambos os campos com números válidos.');
+                }
 
-            // Verificação se os valores são números
-            var n1 = Number(tn1.value);
-            var n2 = Number(tn2.value);
+                // Conversão para número e verificação se são números válidos
+                const n1 = Number(tn1);
+                const n2 = Number(tn2);
 
-            if (isNaN(n1) || isNaN(n2)) {
-                errorMsg += 'Os valores inseridos não são números válidos. <br>';
-            }
+                if (isNaN(n1) || isNaN(n2)) {
+                    throw new Error('Os valores inseridos não são números válidos.');
+                }
 
-            // Se houver erro, exibir mensagem de erro
-            if (errorMsg !== '') {
-                document.getElementById('error').innerHTML = errorMsg;
-                document.getElementById('reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
-            } else {
-                // Se não houver erro, realizar a soma
-                var s = n1 + n2;
-                document.getElementById('res').innerHTML = `A soma entre ${n1} e ${n2} é igual a <strong>${s}</strong>`;
-                document.getElementById('reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
+                // Realiza a soma se não houver erro
+                const s = n1 + n2;
+                document.querySelector('#res').innerHTML = `A soma entre ${n1} e ${n2} é igual a <strong>${s}</strong>`;
+                document.querySelector('#reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
+
+            } catch (error) {
+                // Exibe a mensagem de erro se ocorrer alguma exceção
+                document.querySelector('#error').innerHTML = error.message;
+                document.querySelector('#reloadButton').style.display = 'inline'; // Exibe o botão de recarregar
             }
         }
     </script>
