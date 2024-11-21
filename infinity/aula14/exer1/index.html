@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API</title>
+</head>
+<body>
+    <h1>FETCH</h1>
+
+    <button id="botao">Gato</button> <!-- Corrigido o ID do botão -->
+
+    <!-- Div para exibir as imagens -->
+    <div id="catImages"></div>
+
+    <script>
+        const botao = document.querySelector('#botao'); // Seleciona o botão corretamente
+        const catImages = document.querySelector('#catImages'); // Seleciona o container de imagens
+
+        botao.addEventListener('click', fetchCatImages);
+
+        function fetchCatImages() {
+            fetch('https://api.thecatapi.com/v1/images/search?limit=3') // URL corrigida
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('A solicitação não foi bem-atendida');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    catImages.innerHTML = ""; // Limpa as imagens anteriores
+                    data.forEach(cat => {
+                        const catImage = document.createElement('img');
+                        catImage.src = cat.url;
+                        catImage.alt = 'imagem de gato';
+                        catImage.style.maxWidth = "300px"; // Ajusta a largura da imagem
+                        catImages.appendChild(catImage);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro: ', error);
+                });
+        }
+
+
+
+        /*const apiUrl = 'https://api.exemplo.com/dados';
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok){
+                    throw new Error('A solicitação não foi bem-atendida')
+                }
+                return response.json();
+            })
+            .then(data => {
+                
+                console.log(data)
+            })
+            .catch(error => {
+
+                alert('Erro: ' + error.message)
+            });*/        
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
