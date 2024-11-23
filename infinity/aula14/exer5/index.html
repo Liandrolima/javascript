@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Finder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pokémon Finder</h1>
+    <input type="text" id="pokemon-input" placeholder="Digite o nome ou número do Pokémon" aria-label="Digite o nome ou número do Pokémon">
+    <button id="search" title="Buscar Pokémon">Buscar</button>
+    <div id="pokemon-info" class="hidden">
+      <h2 id="pokemon-name"></h2>
+      <img id="pokemon-image" src="" alt="Imagem do Pokémon" aria-live="polite">
+      <p id="pokemon-id"></p>
+      <p id="pokemon-types"></p>
+    </div>
+    <p id="error-message" class="hidden" aria-live="assertive"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
