@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Externa</title>
+</head>
+<body>
+  <h1>Dados Climáticos</h1>
+  <script type="module">
+    // Função principal para buscar os dados do clima
+    async function fetchWeatherData() {
+      const apiKey = '44f401e302f9bafc545c88df71a9e88a'; // Insira sua chave de API da OpenWeatherMap
+      const cities = ['London', 'New York', 'Tokyo']; // Cidades para as requisições
+      const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+      try {
+        // Cria as requisições de forma paralela
+        const requests = cities.map(city => 
+          fetch(`${baseUrl}?q=${city}&appid=${apiKey}&units=metric`)
+        );
+
+        // Espera todas as requisições serem resolvidas
+        const responses = await Promise.all(requests);
+
+        // Processa as respostas
+        const data = await Promise.all(responses.map(res => res.json()));
+
+        // Exibe os resultados no console
+        data.forEach((weather, index) => {
+          console.log(`Clima em ${cities[index]}:`);
+          console.log(`Temperatura: ${weather.main.temp}°C`);
+          console.log(`Descrição: ${weather.weather[0].description}`);
+          console.log('---------------------------------');
+        });
+      } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+      }
+    }
+
+    // Chamada da função
+    fetchWeatherData();
+  </script>
+</body>
+</html>

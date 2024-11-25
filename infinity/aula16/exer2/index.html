@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes de Filmes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #1C100D;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 1.5em;
+      margin: 0;
+      color: #444;
+    }
+
+    .card-description {
+      margin: 10px 0;
+      font-size: 0.95em;
+      color: #666;
+    }
+
+    .card-date {
+      font-weight: bold;
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Detalhes de Filmes</h1>
+  <div class="container" id="movieContainer">
+    <!-- Os detalhes dos filmes serão inseridos aqui -->
+  </div>
+
+  <script type="module">
+    async function obterDetalhesFilme() {
+      const apiKey = '6622eda6e38df76022341da1545c9749'; // Insira sua chave de API válida
+      const filmes = ['Venom', 'Sorria', 'Gladiador']; // Nomes dos filmes a serem buscados
+      const baseUrl = 'https://api.themoviedb.org/3/search/movie';
+
+      try {
+        const container = document.getElementById('movieContainer');
+
+        // Cria as requisições de forma paralela
+        const requests = filmes.map(filme =>
+          fetch(`${baseUrl}?api_key=${apiKey}&language=pt-BR&query=${encodeURIComponent(filme)}`)
+        );
+
+        // Espera todas as requisições serem resolvidas
+        const responses = await Promise.all(requests);
+
+        // Processa as respostas e converte para JSON
+        const data = await Promise.all(responses.map(res => res.json()));
+
+        // Exibe os resultados no documento HTML
+        data.forEach((resultado, index) => {
+          if (resultado.results.length > 0) {
+            const filme = resultado.results[0]; // Pega o primeiro resultado mais relevante
+
+            // Cria um card para o filme
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            // Adiciona a imagem do pôster, se disponível
+            const posterPath = filme.poster_path 
+              ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` 
+              : 'https://via.placeholder.com/300x450?text=Sem+Imagem';
+            const img = document.createElement('img');
+            img.src = posterPath;
+            img.alt = `Pôster de ${filme.title}`;
+            card.appendChild(img);
+
+            // Adiciona os detalhes do filme
+            const cardContent = document.createElement('div');
+            cardContent.classList.add('card-content');
+
+            const title = document.createElement('h2');
+            title.classList.add('card-title');
+            title.textContent = filme.title;
+            cardContent.appendChild(title);
+
+            const description = document.createElement('p');
+            description.classList.add('card-description');
+            description.textContent = filme.overview || 'Sem descrição disponível.';
+            cardContent.appendChild(description);
+
+            const releaseDate = document.createElement('p');
+            releaseDate.classList.add('card-date');
+            releaseDate.textContent = `Data de Lançamento: ${filme.release_date || 'Indisponível'}`;
+            cardContent.appendChild(releaseDate);
+
+            card.appendChild(cardContent);
+            container.appendChild(card);
+          } else {
+            console.warn(`Nenhum resultado encontrado para: ${filmes[index]}`);
+          }
+        });
+      } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+      }
+    }
+
+    // Chamada da função
+    obterDetalhesFilme();
+  </script>
+</body>
+</html>
