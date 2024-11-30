@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual frontend com React</title>
+</head>
+<body>
+    <h1>Manual frontend com React</h1>
+    <p>
+        1. Configurar o Ambiente
+        1.1 Instale o Node.js
+        Baixe o Node.js e instale a versão LTS.
+        Verifique se o Node.js e o npm foram instalados:
+        bash
+        Copiar código
+        node -v
+        npm -v
+        1.2 Instale o Gerenciador de Pacotes (Opcional)
+        Você pode usar o yarn como alternativa ao npm:
+        bash
+        Copiar código
+        npm install -g yarn
+        2. Criar um Projeto React
+        2.1 Crie o Projeto com Create React App
+        Use o comando abaixo para criar o projeto React:
+        bash
+        Copiar código
+        npx create-react-app nome-do-projeto
+        Ou, se estiver usando yarn:
+        bash
+        Copiar código
+        yarn create react-app nome-do-projeto
+        2.2 Acesse o Diretório do Projeto
+        Após a criação, entre no diretório:
+        bash
+        Copiar código
+        cd nome-do-projeto
+        3. Estrutura Inicial do Projeto
+        A estrutura do projeto gerada será semelhante a esta:
+
+        plaintext
+        Copiar código
+        nome-do-projeto/
+        ├── node_modules/
+        ├── public/
+        ├── src/
+        │   ├── App.css
+        │   ├── App.js
+        │   ├── index.css
+        │   ├── index.js
+        │   └── ...
+        ├── .gitignore
+        ├── package.json
+        ├── README.md
+        └── ...
+        4. Iniciar o Servidor de Desenvolvimento
+        4.1 Execute o Projeto
+        Use o comando:
+
+        bash
+        Copiar código
+        npm start
+        Ou, se estiver usando yarn:
+
+        bash
+        Copiar código
+        yarn start
+        O React abrirá automaticamente no navegador, geralmente em http://localhost:3000.
+
+        5. Personalizar o Projeto
+        5.1 Limpe o Projeto Inicial
+        Remova o conteúdo do componente App.js e App.css para começar do zero:
+        javascript
+        Copiar código
+        // App.js
+        import React from 'react';
+
+        function App() {
+            return (
+                <div className="App">
+                    <h1>Bem-vindo ao Meu Projeto React</h1>
+                </div>
+            );
+        }
+
+        export default App;
+        5.2 Atualize os Estilos
+        No arquivo App.css, adicione estilos básicos:
+        css
+        Copiar código
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .App {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        6. Criar Componentes
+        6.1 Exemplo de Componente Simples
+        Crie um arquivo Hello.js em src/:
+
+        javascript
+        Copiar código
+        import React from 'react';
+
+        function Hello(props) {
+            return <h2>Olá, {props.name}!</h2>;
+        }
+
+        export default Hello;
+        Importe e use no App.js:
+
+        javascript
+        Copiar código
+        import React from 'react';
+        import Hello from './Hello';
+
+        function App() {
+            return (
+                <div className="App">
+                    <h1>Bem-vindo ao Meu Projeto React</h1>
+                    <Hello name="Usuário" />
+                </div>
+            );
+        }
+
+        export default App;
+        7. Adicionar Funcionalidades
+        7.1 Estado e Eventos com useState
+        Modifique o App.js para usar o estado:
+        javascript
+        Copiar código
+        import React, { useState } from 'react';
+
+        function App() {
+            const [contador, setContador] = useState(0);
+
+            const incrementar = () => setContador(contador + 1);
+
+            return (
+                <div className="App">
+                    <h1>Contador: {contador}</h1>
+                    <button onClick={incrementar}>Incrementar</button>
+                </div>
+            );
+        }
+
+        export default App;
+        8. Conectar ao Backend
+        8.1 Fazer Requisições com Axios
+        Instale o Axios:
+
+        bash
+        Copiar código
+        npm install axios
+        Exemplo de requisição GET no App.js:
+
+        javascript
+        Copiar código
+        import React, { useEffect, useState } from 'react';
+        import axios from 'axios';
+
+        function App() {
+            const [dados, setDados] = useState([]);
+
+            useEffect(() => {
+                axios.get('https://api.exemplo.com/dados')
+                    .then((response) => setDados(response.data))
+                    .catch((error) => console.error('Erro ao buscar dados:', error));
+            }, []);
+
+            return (
+                <div className="App">
+                    <h1>Dados da API</h1>
+                    <ul>
+                        {dados.map((item, index) => (
+                            <li key={index}>{item.nome}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        export default App;
+        9. Produção e Deploy
+        9.1 Build do Projeto
+        Gere uma versão otimizada para produção:
+        bash
+        Copiar código
+        npm run build
+        9.2 Hospede o Projeto
+        Use serviços como:
+        GitHub Pages:
+
+        Instale o pacote para deploy:
+        bash
+        Copiar código
+        npm install gh-pages
+        Configure o package.json:
+        json
+        Copiar código
+        "homepage": "https://usuario.github.io/repositorio",
+        "scripts": {
+            "predeploy": "npm run build",
+            "deploy": "gh-pages -d build"
+        }
+        Faça o deploy:
+        bash
+        Copiar código
+        npm run deploy
+        Netlify ou Vercel:
+
+        Faça upload ou conecte ao repositório GitHub.
+    </p>
+</body>
+</html>
