@@ -189,6 +189,7 @@
         }
 
         export default App;
+        
         9. Produção e Deploy
         9.1 Build do Projeto
         Gere uma versão otimizada para produção:
@@ -218,6 +219,24 @@
         Netlify ou Vercel:
 
         Faça upload ou conecte ao repositório GitHub.
+        O que você deve fazer agora?
+        Verificar as vulnerabilidades (opcional):
+        Você pode listar os detalhes das vulnerabilidades:
+
+        bash
+        Copiar código
+        npm audit
+        Tentar corrigir automaticamente (recomendado):
+        Para resolver os problemas, execute:
+
+        bash
+        Copiar código
+        npm audit fix
+        Se houver vulnerabilidades críticas que não possam ser corrigidas diretamente, use o comando abaixo (cuidado, pois ele pode incluir mudanças que quebrem outras partes do projeto):
+
+        bash
+        Copiar código
+        npm audit fix --force
     </p>
 </body>
 </html>
