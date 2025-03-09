@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exibindo Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <div id="produtos"></div>
+
+    <script>
+        // Função para buscar os dados da API e exibi-los na página
+        async function obterProdutos() {
+            try {
+                // Fazendo a requisição para a API
+                const resposta = await fetch('https://fakestoreapi.com/products');
+                const produtos = await resposta.json();  // Convertendo a resposta em JSON
+
+                // Selecionando o elemento onde os produtos serão exibidos
+                const divProdutos = document.getElementById('produtos');
+
+                // Iterando sobre os produtos e criando o HTML para exibi-los
+                produtos.forEach(produto => {
+                    const produtoDiv = document.createElement('div');
+                    produtoDiv.style.border = '1px solid #ccc';
+                    produtoDiv.style.margin = '10px';
+                    produtoDiv.style.padding = '10px';
+
+                    // Criando o conteúdo HTML para cada produto
+                    produtoDiv.innerHTML = `
+                        <h3>${produto.title}</h3>
+                        <img src="${produto.image}" alt="${produto.title}" style="width: 150px; height: auto;">
+                        <p>${produto.description}</p>
+                        <p>Preço: R$ ${produto.price.toFixed(2)}</p>
+                        <p>Categoria: ${produto.category}</p>
+                        <p>Avaliação: ${produto.rating.rate} (${produto.rating.count} avaliações)</p>
+                    `;
+
+                    // Adicionando o produto à div
+                    divProdutos.appendChild(produtoDiv);
+                });
+            } catch (erro) {
+                console.error('Erro ao buscar os dados:', erro);
+            }
+        }
+
+        // Chamando a função para obter e exibir os produtos ao carregar a página
+        obterProdutos();
+    </script>
+</body>
+</html>
